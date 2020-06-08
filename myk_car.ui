@@ -108,6 +108,13 @@ border:1px solid black;
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>Resultats</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>

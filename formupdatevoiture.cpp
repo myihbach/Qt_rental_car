@@ -72,7 +72,7 @@ void formUpdateVoiture::on_pushButton_modifier_clicked()
 
     QSqlQuery query;
    // QString statement=");";
-    if(query.exec("UPDATE voitures SET modele = '"+mod+"', couleur = '"+coul+"' , categorie_id = '"+cat+"', marque_id = '"+mar+"', prix = '"+pri+"' WHERE matricule = '"+matri+"';"))
+    if(query.exec("UPDATE voitures SET modele = '"+mod+"', couleur = '"+coul+"' , categorie_id = '"+idCat+"', marque_id = '"+idMar+"', prix = '"+pri+"' WHERE matricule = '"+matri+"';"))
         qDebug() << " well updated" ;
     else
         qDebug() << " Error de modification :"<< query.lastError().text();

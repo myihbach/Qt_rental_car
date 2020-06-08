@@ -41,15 +41,24 @@ Ui::formReservation *formReservation::getUi()
 void formReservation::on_pushButton_reserver_clicked()
 {
     QString client_id = ui->client_id->text();
-    QString nbr_jour = QString::number(ui->nbr_jours->value());
+    int nbr_jour = ui->nbr_jours->value();
     QString dateReservation = ui->dateReservation->text();
+    QSqlQuery prixVoitureQuery;
+
+    prixVoitureQuery.exec("select prix from voitures where matricule ='"+matricule+"';");
+    prixVoitureQuery.first();
+    float prix_voiture =prixVoitureQuery.value(0).toInt();
+    float prix_location = prix_voiture * nbr_jour ;
     qDebug() <<"nbr de jour : "<< nbr_jour ;
+    qDebug() <<"prix voiture : "<< prix_voiture ;
+    qDebug() <<"prix location : "<< prix_location ;
+    qDebug() <<"data : "<<dateReservation << nbr_jour <<client_id << matricule << prix_location  ;
+
     QSqlQuery query;
-    if(query.exec("insert into locations (date_location,nbr_jour,client_id,voiture_id) values('"+dateReservation+"','"+nbr_jour+"','"+client_id+"','"+matricule+"');"))
+    if(query.exec("insert into locations (date_location,nbr_jour,client_id,voiture_id,prix) values('"+dateReservation+"','"+QString::number(nbr_jour)+"','"+client_id+"','"+matricule+"','"+QString::number(prix_location)+"');"))
             qDebug() << "inserted ";
     else
             qDebug() << "error : "<< query.lastError().text();
-    qDebug() <<"data : "<< client_id << nbr_jour << dateReservation << matricule ;
 
     this->close();
 

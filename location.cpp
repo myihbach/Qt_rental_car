@@ -11,6 +11,7 @@ Location::Location(QWidget *parent) :
     getLocations();
     ui->tableView->setModel(locations);
     ui->tableView->setColumnHidden(0,true);
+    ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
@@ -50,15 +51,15 @@ void Location::on_pushButton_modifier_clicked()
                 qDebug() << "Error : " << query.lastError().text();
 
 
-                formUpdateReserv = new formUpdateReservation(this);
-                formUpdateReserv->setModal(true);
-                formUpdateReserv->getUi()->input_client->setText(id);
-                formUpdateReserv->getUi()->input_matricule->setText(matricule);
-                formUpdateReserv->getUi()->nbr_jour->setValue(nbr_jour.toInt());
-                formUpdateReserv->getUi()->date_reservation->setDate(QDate::fromString(date_location,"yyyy-MM-dd"));
-                formUpdateReserv->setId(id);
-                formUpdateReserv->exec();
-                refreshDB();
+        formUpdateReserv = new formUpdateReservation(this);
+        formUpdateReserv->setModal(true);
+        formUpdateReserv->getUi()->input_client->setText(id);
+        formUpdateReserv->getUi()->input_matricule->setText(matricule);
+        formUpdateReserv->getUi()->nbr_jour->setValue(nbr_jour.toInt());
+        formUpdateReserv->getUi()->date_reservation->setDate(QDate::fromString(date_location,"yyyy-MM-dd"));
+        formUpdateReserv->setId(id);
+        formUpdateReserv->exec();
+        refreshDB();
 
 }
 

@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     client.cpp \
+    formclient.cpp \
     formreservation.cpp \
     formupdatereservation.cpp \
     formupdatevoiture.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
 
 HEADERS += \
     client.h \
+    formclient.h \
     formreservation.h \
     formupdatereservation.h \
     formupdatevoiture.h \
@@ -40,6 +42,7 @@ HEADERS += \
 
 FORMS += \
     client.ui \
+    formclient.ui \
     formreservation.ui \
     formupdatereservation.ui \
     formupdatevoiture.ui \

@@ -14,9 +14,13 @@ Voiture::Voiture(QWidget *parent) :
     ui->setupUi(this);
     ui->tableView_dispo->verticalHeader()->hide();
     ui->tableView_reserv->verticalHeader()->hide();
+    ui->tableView_dispo->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableView_reserv->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableView_dispo->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableView_dispo->setSelectionMode(QAbstractItemView::SingleSelection);
     this->setWindowTitle("Voitures");
+    voiture_dispo = new QSqlQueryModel();
+    voiture_reserv = new QSqlQueryModel();
     getModels();
     //ui->tableView_dispo->setEditTriggers(QAbstractItemView::NoEditTriggers);
     //ui->tableView_reserv->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -33,16 +37,17 @@ Voiture::~Voiture()
 
 void Voiture::on_pushButton_clicked()
 {
-    formAjoutVoiture = new formVoiture(this);
-    formAjoutVoiture->setModal(true);
-    formAjoutVoiture->exec();
-    refreshDB();
+        formAjoutVoiture = new formVoiture(this);
+        formAjoutVoiture->setModal(true);
+        formAjoutVoiture->exec();
+        refreshDB();
+
 
 }
 
 void Voiture::on_pushButton_reserver_clicked()
 {
-    int position = ui->tableView_dispo->currentIndex().row();// reccuperer la position de ligne selectionner
+        int position = ui->tableView_dispo->currentIndex().row();// reccuperer la position de ligne selectionner
 // je boucle sur toutes les elements de la lignes (les colonnes = 5 )
    /* for(int i=0;i<5;i++){
 
@@ -51,9 +56,9 @@ void Voiture::on_pushButton_reserver_clicked()
         QString itemText = newIndex.data(Qt::DisplayRole).toString();// reccuperer la valeur de la case reccuperée
         qDebug() << itemText ; // afficher la case
     } */
-    QModelIndex newIndex = ui->tableView_dispo->model()->index(position,1);
-    ui->tableView_dispo->selectionModel()->select(newIndex, QItemSelectionModel::Select);
-    QString mat = newIndex.data(Qt::DisplayRole).toString();
+       QModelIndex newIndex = ui->tableView_dispo->model()->index(position,1);
+       ui->tableView_dispo->selectionModel()->select(newIndex, QItemSelectionModel::Select);
+       QString mat = newIndex.data(Qt::DisplayRole).toString();
 
        formReservation form(this);
        form.setMAtricule(mat);
@@ -78,8 +83,6 @@ void Voiture::refreshDB()
 }
 
 void Voiture::getModels(){
-    voiture_dispo = new QSqlQueryModel();
-    voiture_reserv = new QSqlQueryModel();
     voiture_dispo->setQuery("select m.nom ,v.matricule, v.modele , v.prix,v.couleur  from voitures v join marques m on v.marque_id=m.id");
     voiture_reserv->setQuery("select m.nom ,v.matricule, v.modele , v.prix,v.couleur  from voitures v join marques m on v.marque_id=m.id");
     ui->tableView_dispo->setModel(voiture_dispo);
@@ -95,8 +98,7 @@ void Voiture::getModels(){
 
 void Voiture::on_pushButton_supprimer_clicked()
 {
-    int position = ui->tableView_dispo->currentIndex().row();// reccuperer la position de ligne selectionner
-    if(position!=NULL){
+        int position = ui->tableView_dispo->currentIndex().row();// reccuperer la position de ligne selectionner
         QModelIndex newIndex = ui->tableView_dispo->model()->index(position,1);
         ui->tableView_dispo->selectionModel()->select(newIndex, QItemSelectionModel::Select);
         QString mat = newIndex.data(Qt::DisplayRole).toString();
@@ -105,8 +107,7 @@ void Voiture::on_pushButton_supprimer_clicked()
                 qDebug() << "deleted";
         else
                 qDebug() << "Error : "<< query.lastError().text();
-    }
-    refreshDB();
+        refreshDB();
 
 }
 
