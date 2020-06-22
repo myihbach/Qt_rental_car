@@ -9,7 +9,7 @@ formReservation::formReservation(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Reservation formulaire");
-    ui->dateReservation->setDisplayFormat("dd/MM/yyyy");
+    ui->dateReservation->setDisplayFormat("yyyy-MM-dd");
     ui->dateReservation->setMinimumDate(QDate::currentDate());
     ui->nbr_jours->setMinimum(1);
     //this->matricules = matricules;

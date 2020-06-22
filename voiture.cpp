@@ -40,7 +40,8 @@ void Voiture::on_pushButton_clicked()
         formAjoutVoiture = new formVoiture(this);
         formAjoutVoiture->setModal(true);
         formAjoutVoiture->exec();
-        refreshDB();
+        //refreshDB();
+        getModels();
 
 
 }
@@ -64,12 +65,13 @@ void Voiture::on_pushButton_reserver_clicked()
        form.setMAtricule(mat);
        form.setModal(true);
        form.exec();
-       refreshDB();
+       getModels();
+       //refreshDB();
 
 
 }
 
-void Voiture::refreshDB()
+/*void Voiture::refreshDB()
 {
     // getModels();
      voiture_dispo->setQuery("select m.nom ,v.matricule, v.modele , v.prix,v.couleur  from voitures v join marques m on v.marque_id=m.id");
@@ -80,11 +82,11 @@ void Voiture::refreshDB()
      ui->tableView_reserv->verticalHeader()->hide();
      ui->tableView_dispo->setSelectionBehavior(QAbstractItemView::SelectRows);
      ui->tableView_dispo->setSelectionMode(QAbstractItemView::SingleSelection);
-}
+}*/
 
 void Voiture::getModels(){
-    voiture_dispo->setQuery("select m.nom ,v.matricule, v.modele , v.prix,v.couleur  from voitures v join marques m on v.marque_id=m.id");
-    voiture_reserv->setQuery("select m.nom ,v.matricule, v.modele , v.prix,v.couleur  from voitures v join marques m on v.marque_id=m.id");
+    voiture_dispo->setQuery("select mr.nom ,v.matricule, v.modele , v.prix,v.couleur  from voitures v join marques mr on v.marque_id=mr.id where v.matricule  not in (select voiture_id from maintenances where date('now') Between date_entree and date_sortie) and v.matricule not in ( select voiture_id from locations where date('now') Between date_location and date(date_location,'+'||nbr_jour||' day'));");
+    voiture_reserv->setQuery("select mr.nom ,v.matricule, v.modele , v.prix,v.couleur  from voitures v join marques mr on v.marque_id=mr.id where v.matricule in (select voiture_id from maintenances where date('now') Between date_entree and date_sortie) or v.matricule in ( select voiture_id from locations where date('now') Between date_location and date(date_location,'+'||nbr_jour||' day'));");
     ui->tableView_dispo->setModel(voiture_dispo);
     ui->tableView_reserv->setModel(voiture_reserv);
     ui->tableView_dispo->setColumnHidden(1, true);// la colonne de matricule est cachée
@@ -107,7 +109,8 @@ void Voiture::on_pushButton_supprimer_clicked()
                 qDebug() << "deleted";
         else
                 qDebug() << "Error : "<< query.lastError().text();
-        refreshDB();
+        //refreshDB();
+        getModels();
 
 }
 
@@ -151,7 +154,7 @@ void Voiture::on_pushButton_modifier_clicked()
                 formUpdateVoi->getUi()->input_couleur->setText(couleur);
                 formUpdateVoi->exec();
 
-
-                refreshDB();
+                getModels();
+                //refreshDB();
 
 }

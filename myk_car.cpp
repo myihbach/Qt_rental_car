@@ -74,3 +74,10 @@ void MYK_CAR::on_pushButton_locations_clicked()
     location.setModal(true);
     location.exec();
 }
+
+void MYK_CAR::on_pushButton_clicked()
+{
+    Resultat resultat;
+    resultat.setModal(true);
+    resultat.exec();
+}

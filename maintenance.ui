@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>540</width>
+    <height>438</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,34 +16,27 @@
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>12</y>
-     <width>381</width>
-     <height>281</height>
+     <x>25</x>
+     <y>11</y>
+     <width>491</width>
+     <height>401</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Voiture en maintenance</string>
-      </property>
-     </widget>
-    </item>
     <item>
      <widget class="QTableView" name="tableView"/>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="pushButton_ajouter">
         <property name="text">
          <string>Ajouter</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="pushButton_modifier">
         <property name="text">
          <string>Modifier</string>
         </property>
@@ -52,7 +45,7 @@
      </layout>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="pushButton_supprimer">
       <property name="text">
        <string>Supprimer</string>
       </property>

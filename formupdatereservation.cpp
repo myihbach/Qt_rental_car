@@ -6,7 +6,9 @@ formUpdateReservation::formUpdateReservation(QWidget *parent) :
     ui(new Ui::formUpdateReservation)
 {
     ui->setupUi(this);
+    ui->date_reservation->setDisplayFormat("yyyy-MM-dd");
     ui->date_reservation->setMinimumDate(QDate::currentDate());
+
 
 }
 

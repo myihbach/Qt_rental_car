@@ -9,6 +9,8 @@
 #include "maintenance.h"
 #include "client.h"
 #include "formvoiture.h"
+#include "resultat.h"
+#include "ui_resultat.h"
 
 
 
@@ -34,6 +36,8 @@ private slots:
     void on_pushButton_maintenance_clicked();
 
     void on_pushButton_locations_clicked();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::MYK_CAR *ui;

@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     client.cpp \
     formclient.cpp \
+    formmaintenance.cpp \
     formreservation.cpp \
     formupdatereservation.cpp \
     formupdatevoiture.cpp \
@@ -26,11 +27,13 @@ SOURCES += \
     main.cpp \
     maintenance.cpp \
     myk_car.cpp \
+    resultat.cpp \
     voiture.cpp
 
 HEADERS += \
     client.h \
     formclient.h \
+    formmaintenance.h \
     formreservation.h \
     formupdatereservation.h \
     formupdatevoiture.h \
@@ -38,11 +41,13 @@ HEADERS += \
     location.h \
     maintenance.h \
     myk_car.h \
+    resultat.h \
     voiture.h
 
 FORMS += \
     client.ui \
     formclient.ui \
+    formmaintenance.ui \
     formreservation.ui \
     formupdatereservation.ui \
     formupdatevoiture.ui \
@@ -50,6 +55,7 @@ FORMS += \
     location.ui \
     maintenance.ui \
     myk_car.ui \
+    resultat.ui \
     voiture.ui
 
 # Default rules for deployment.

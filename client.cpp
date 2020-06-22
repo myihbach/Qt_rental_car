@@ -13,7 +13,6 @@ Client::Client(QWidget *parent) :
     getModels();
     ui->tableView->verticalHeader()->hide();
     ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tableView->setModel(model);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -39,6 +38,8 @@ void Client::on_pushButton_ajouter_clicked()
 void Client::getModels()
 {
     model->setQuery("select id , nom || ' ' || prenom as 'Nom',mail as 'Email' ,tel as 'Telephone' from clients ");
+    ui->tableView->setModel(model);
+
 }
 
 void Client::on_pushButton_modifier_clicked()
