@@ -23,11 +23,11 @@ SOURCES += \
     formupdatereservation.cpp \
     formupdatevoiture.cpp \
     formvoiture.cpp \
+    gain.cpp \
     location.cpp \
     main.cpp \
     maintenance.cpp \
     myk_car.cpp \
-    resultat.cpp \
     voiture.cpp
 
 HEADERS += \
@@ -38,10 +38,10 @@ HEADERS += \
     formupdatereservation.h \
     formupdatevoiture.h \
     formvoiture.h \
+    gain.h \
     location.h \
     maintenance.h \
     myk_car.h \
-    resultat.h \
     voiture.h
 
 FORMS += \
@@ -52,10 +52,10 @@ FORMS += \
     formupdatereservation.ui \
     formupdatevoiture.ui \
     formvoiture.ui \
+    gain.ui \
     location.ui \
     maintenance.ui \
     myk_car.ui \
-    resultat.ui \
     voiture.ui
 
 # Default rules for deployment.

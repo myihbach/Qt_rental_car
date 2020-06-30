@@ -78,7 +78,7 @@
       <item>
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Reservé</string>
+         <string>En usage</string>
         </property>
        </widget>
       </item>

@@ -109,9 +109,12 @@ border:1px solid black;
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="pushButton_gain">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="text">
-        <string>Resultats</string>
+        <string>Resultat</string>
        </property>
       </widget>
      </item>

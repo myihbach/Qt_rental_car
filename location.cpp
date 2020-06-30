@@ -26,7 +26,7 @@ Location::~Location()
 void Location::getLocations()
 {
     locations = new QSqlQueryModel;
-    locations->setQuery("select l.id,v.modele ,l.date_location , l.nbr_jour from locations l join voitures v on l.voiture_id=v.matricule");
+    locations->setQuery("select l.id,v.modele ,l.date_location , l.nbr_jour from locations l join voitures v on l.voiture_id=v.matricule order by l.date_location desc");
     ui->tableView->verticalHeader()->hide();
 }
 

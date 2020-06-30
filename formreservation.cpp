@@ -12,6 +12,11 @@ formReservation::formReservation(QWidget *parent) :
     ui->dateReservation->setDisplayFormat("yyyy-MM-dd");
     ui->dateReservation->setMinimumDate(QDate::currentDate());
     ui->nbr_jours->setMinimum(1);
+    QSqlQueryModel * reserved_in = new QSqlQueryModel();
+    reserved_in->setQuery("select date_location as 'Reservée de', date(date_location, '+'||nbr_jour||' day') as ' A '  from locations where voiture_id ='"+matricule+"' and date(date_location, '+'||nbr_jour||' day') >= date('now') ;");
+    ui->tableView->setModel(reserved_in);
+    ui->tableView->verticalHeader()->hide();
+    ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     //this->matricules = matricules;
 
 }
@@ -40,10 +45,15 @@ Ui::formReservation *formReservation::getUi()
 
 void formReservation::on_pushButton_reserver_clicked()
 {
+
+    // recuperation des dates ou la voiture est reservée
+
     QString client_id = ui->client_id->text();
     int nbr_jour = ui->nbr_jours->value();
     QString dateReservation = ui->dateReservation->text();
     QSqlQuery prixVoitureQuery;
+
+    //====================================================
 
     prixVoitureQuery.exec("select prix from voitures where matricule ='"+matricule+"';");
     prixVoitureQuery.first();
@@ -53,6 +63,7 @@ void formReservation::on_pushButton_reserver_clicked()
     qDebug() <<"prix voiture : "<< prix_voiture ;
     qDebug() <<"prix location : "<< prix_location ;
     qDebug() <<"data : "<<dateReservation << nbr_jour <<client_id << matricule << prix_location  ;
+
 
     QSqlQuery query;
     if(query.exec("insert into locations (date_location,nbr_jour,client_id,voiture_id,prix) values('"+dateReservation+"','"+QString::number(nbr_jour)+"','"+client_id+"','"+matricule+"','"+QString::number(prix_location)+"');"))

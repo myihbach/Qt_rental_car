@@ -27,7 +27,6 @@ void MYK_CAR::connectionToDB(){
     db.setDatabaseName("myk");
     db.setUserName("root");
     db.setPassword("");*/
-
     // connexion a la base de données
     QString dbname="C:\\Users\\m.y.ihbach\\Desktop\\MYK_\\myk.db";
     db = QSqlDatabase::addDatabase("QSQLITE");
@@ -75,9 +74,15 @@ void MYK_CAR::on_pushButton_locations_clicked()
     location.exec();
 }
 
-void MYK_CAR::on_pushButton_clicked()
+
+
+
+
+
+
+void MYK_CAR::on_pushButton_gain_clicked()
 {
-    Resultat resultat;
-    resultat.setModal(true);
-    resultat.exec();
+    Gain gain;
+    gain.setModal(true);
+    gain.exec();
 }

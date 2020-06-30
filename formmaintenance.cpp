@@ -9,9 +9,8 @@ formMaintenance::formMaintenance(QWidget *parent) :
     this->setWindowTitle("Maintenance");
     ui->input_date_entree->setDisplayFormat("yyyy-MM-dd");
     ui->input_date_sortie->setDisplayFormat("yyyy-MM-dd");
-    ui->input_date_entree->setDate(QDate::currentDate());
-    ui->input_date_sortie->setDate(QDate::currentDate());
-    ui->input_date_sortie->setMinimumDate(ui->input_date_entree->date());
+    ui->input_date_entree->setMinimumDate(QDate::currentDate());
+    ui->input_date_sortie->setMinimumDate(QDate::currentDate());
 
 }
 
@@ -46,12 +45,13 @@ void formMaintenance::on_pushButton_clicked()
 
         qDebug() << matricule << description << date_entree << date_sortie << prix;
 
-        QSqlQuery query;
+             QSqlQuery query;
+             if(query.exec("INSERT INTO maintenances ( description,voiture_id,date_entree,date_sortie,prix) VALUES ('"+description+"','"+matricule+"','"+date_entree+"','"+date_sortie+"','"+prix+"');"))
+                 qDebug() << "Well inserted" ;
+             else
+                 qDebug() << "Error d'insertion : "<< query.lastError().text();
 
-        if(query.exec("INSERT INTO maintenances ( description,voiture_id,date_entree,date_sortie,prix) VALUES ('"+description+"','"+matricule+"','"+date_entree+"','"+date_sortie+"','"+prix+"');"))
-            qDebug() << "Well inserted" ;
-        else
-            qDebug() << "Error d'insertion :"<< query.lastError().text();
+
     }
 
     if(ui->pushButton->text() == "Modifier"){
@@ -63,16 +63,17 @@ void formMaintenance::on_pushButton_clicked()
         QString date_entree = ui->input_date_entree->text();
         QString date_sortie = ui->input_date_sortie->text();
         QString prix = ui->input_prix->text();
-
         qDebug() << matricule << description << date_entree << date_sortie << prix;
 
-        QSqlQuery query;
 
-        if(query.exec("UPDATE maintenances SET description = '"+description+"' , voiture_id = '"+matricule+"' , date_entree = '"+date_entree+"' ,date_sortie = '"+date_sortie+"' , prix = '"+prix+"'  where id = '"+this->id+"' ;"))
+            QSqlQuery query;
 
-            qDebug() << "Well updated" ;
-        else
-            qDebug() << "Error de mise a jour :"<< query.lastError().text();
+            if(query.exec("UPDATE maintenances SET description = '"+description+"' , voiture_id = '"+matricule+"' , date_entree = '"+date_entree+"' ,date_sortie = '"+date_sortie+"' , prix = '"+prix+"'  where id = '"+this->id+"' ;"))
+
+                qDebug() << "Well updated" ;
+            else
+                qDebug() << "Error de mise a jour :"<< query.lastError().text();
+
     }
 
     this->close();
