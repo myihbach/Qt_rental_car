@@ -12,9 +12,7 @@ formReservation::formReservation(QWidget *parent) :
     ui->dateReservation->setDisplayFormat("yyyy-MM-dd");
     ui->dateReservation->setMinimumDate(QDate::currentDate());
     ui->nbr_jours->setMinimum(1);
-    QSqlQueryModel * reserved_in = new QSqlQueryModel();
-    reserved_in->setQuery("select date_location as 'Reservée de', date(date_location, '+'||nbr_jour||' day') as ' A '  from locations where voiture_id ='"+matricule+"' and date(date_location, '+'||nbr_jour||' day') >= date('now') ;");
-    ui->tableView->setModel(reserved_in);
+
     ui->tableView->verticalHeader()->hide();
     ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     //this->matricules = matricules;
@@ -54,23 +52,37 @@ void formReservation::on_pushButton_reserver_clicked()
     QSqlQuery prixVoitureQuery;
 
     //====================================================
+    qDebug() << matricule;
+    // voir si la voiture est deja reservé en future
+    QSqlQuery query_;
+    QString nbr("+"+QString::number(nbr_jour)+" days");
+    qDebug() << nbr;
 
-    prixVoitureQuery.exec("select prix from voitures where matricule ='"+matricule+"';");
-    prixVoitureQuery.first();
-    float prix_voiture =prixVoitureQuery.value(0).toInt();
-    float prix_location = prix_voiture * nbr_jour ;
-    qDebug() <<"nbr de jour : "<< nbr_jour ;
-    qDebug() <<"prix voiture : "<< prix_voiture ;
-    qDebug() <<"prix location : "<< prix_location ;
-    qDebug() <<"data : "<<dateReservation << nbr_jour <<client_id << matricule << prix_location  ;
+    if(query_.exec("select count(id) from locations where voiture_id = '"+matricule+"' and ( date_location BETWEEN '"+dateReservation+"' and date('"+dateReservation+"','"+nbr+"') or date(date_location,nbr_jour||' days') BETWEEN '"+dateReservation+"' and date('"+dateReservation+"','"+nbr+"') )"))
+    {
+        qDebug() << " sounds great";
+        query_.first();
+        if(query_.value(0).toInt() == 0){
 
+            prixVoitureQuery.exec("select prix from voitures where matricule ='"+matricule+"';");
+            prixVoitureQuery.first();
+            float prix_voiture =prixVoitureQuery.value(0).toInt();
+            float prix_location = prix_voiture * nbr_jour ;
+            QSqlQuery query;
+            if(query.exec("insert into locations (date_location,nbr_jour,client_id,voiture_id,prix) values('"+dateReservation+"','"+QString::number(nbr_jour)+"','"+client_id+"','"+matricule+"','"+QString::number(prix_location)+"');"))
+                    qDebug() << "inserted ";
+            else
+                    qDebug() << "error : "<< query.lastError().text();
 
-    QSqlQuery query;
-    if(query.exec("insert into locations (date_location,nbr_jour,client_id,voiture_id,prix) values('"+dateReservation+"','"+QString::number(nbr_jour)+"','"+client_id+"','"+matricule+"','"+QString::number(prix_location)+"');"))
-            qDebug() << "inserted ";
+            this->close();
+        }
+        else{
+            QMessageBox msg(this);
+            msg.setText("La date que vous avez choisi est deja reservée. Svp verifier la liste ci-dessous.");
+            msg.exec();
+        }
+    }
     else
-            qDebug() << "error : "<< query.lastError().text();
-
-    this->close();
+        qDebug() << query_.lastError().text();
 
 }

@@ -63,9 +63,12 @@ void Voiture::on_pushButton_reserver_clicked()
             ui->tableView_dispo->selectionModel()->select(newIndex, QItemSelectionModel::Select);
             QString mat = newIndex.data(Qt::DisplayRole).toString();
 
+            QSqlQueryModel * reserved_in = new QSqlQueryModel();
+            reserved_in->setQuery("SELECT date_location as 'Reservée de ' , date(date_location,nbr_jour||' days') as ' A ' FROM locations where voiture_id='"+mat+"' and date_location > date('now') order by id desc;");
             formReservation form(this);
             form.setMAtricule(mat);
             form.setModal(true);
+            form.getUi()->tableView->setModel(reserved_in);
             form.exec();
             getModels();
             //refreshDB();
